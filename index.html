@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Miami Funding Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" defer></script>
+  <script defer>
+    window.addEventListener("DOMContentLoaded", () => {
+      emailjs.init("ntpdz1-kojjfmourz");
+    });
+  </script>
+<!-- Vanta.js Background -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js" defer></script>
+<script defer>
+  window.addEventListener("DOMContentLoaded", () => {
+    VANTA.WAVES({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.00,
+      scaleMobile: 1.00,
+      color: 0x111827,
+      shininess: 0.00,
+      waveHeight: 11.00,
+      waveSpeed: 0.25,
+      zoom: 1.33
+    });
+  });
+</script>
+
+
+
+</head>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("fundingForm");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault(); // prevent default form submission
+
+    // OPTIONAL: Disable the button during submission
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting...";
+
+    emailjs.sendForm("service_95zy8qp", "template_qgwfidj", form)
+      .then(() => {
+        // Show thank you message
+          document.getElementById("formFields").style.display = "none";
+          document.getElementById("successMessage").style.display = "flex";
+          form.reset();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      })
+      .catch((error) => {
+        alert("Failed to send form: " + error.text);
+      })
+      .finally(() => {
+        // Reset button
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Application";
+      });
+  });
+});
+</script>
+
+<script>
+  function scrollToForm() {
+    const formSection = document.getElementById("form-section");
+    if (formSection) {
+      formSection.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+</script>
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const scrollToTopBtn = document.getElementById("scrollToTop");
+
+    window.addEventListener("scroll", () => {
+      scrollToTopBtn.style.display = window.scrollY > 300 ? "block" : "none";
+    });
+
+    scrollToTopBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+</script>
+
+
+<body>
+  <div id="vanta-bg"></div>
+
+  <div id="splash-screen">
+    <img src="assets/logo1.png" alt="Logo" />
+  </div>
+
+  <header class="sticky-header">
+    <div class="header-logo">
+  <img src="assets/logo1.png" alt="Logo" class="logo-img">
+  <h1>Miami Funding Hub</h1>
+</div>
+
+    <button onclick="scrollToForm()">Apply Now</button>
+  </header>
+
+  <div class="top-bar">
+    <span>📞 (305) 555-1234</span>
+    <span>📧 funding@miamifundinghub.com</span>
+  </div>
+
+  <main>
+  <section class="hero-form-wrapper">
+    <div class="scrollable-left">
+      <div class="hero-content">
+        <h2>Get the Funding Your Business Deserves</h2>
+        <p>Simple, secure, and fast access to business capital.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>Who We Are</h3>
+        <p>We are an independent affiliate of First Class Business Group, committed to connecting small businesses with fast, reliable access to capital solutions tailored to their needs.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>What We Do</h3>
+        <p>We help business owners get the funding they need — quickly and securely. Whether it's for equipment, working capital, or growth, we simplify the process from application to approval.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>How to Apply</h3>
+        <p>Complete the short form and one of our team members will reach out shortly. It’s simple, fast, and we guide you every step of the way.</p>
+      </div>
+    </div>
+
+    <aside class="form-section sticky-right" id="form-section">
+      <form id="fundingForm">
+        <h3>Funding Application</h3>
+
+        <div class="form-group">
+          <input type="text" name="name" placeholder="Full Name" required>
+        </div>
+
+        <div class="form-group">
+          <input type="text" name="businessName" placeholder="Business Name" required>
+        </div>
+
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Email" required>
+        </div>
+
+        <div class="form-group">
+          <input type="tel" name="phone" placeholder="Phone Number" required>
+        </div>
+
+        <div class="form-group">
+          <input type="number" name="monthlyRevenue" placeholder="Monthly Revenue (Last 4-Month Avg)" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="years">Years in Business:</label>
+            <input type="text" id="years" name="years">
+            </div>
+          <div class="form-group half-width">
+            <label for="industry">Industry:</label>
+            <input type="text" id="industry" name="industry">
+          </div>
+        </div>
+        <div class="form-group">
+    <label for="fundingAmount">Funding Amount Requested:</label>
+  <input type="number" name="fundingAmount" required>
+</div>
+
+<div class="form-group">
+  <label for="useOfFunds">Use of Funds:</label>
+  <select name="useOfFunds" id="useOfFunds" required>
+    <option value="">-- Select --</option>
+    <option value="Working Capital">Working Capital</option>
+    <option value="Equipment Purchase">Equipment Purchase</option>
+    <option value="Inventory">Inventory</option>
+    <option value="Marketing">Marketing</option>
+    <option value="Expansion">Expansion</option>
+    <option value="Other">Other</option>
+  </select>
+</div>
+
+<div class="form-group">
+  <input type="text" name="referrerCode" placeholder="Referrer Code (Optional)">
+</div>
+
+        <div class="form-group">
+          <label for="funding">Have you received funding before?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+            <input type="radio" id="yes" name="funding" value="yes">
+            Yes
+          </label>
+          <label class="radio-option">
+            <input type="radio" id="no" name="funding" value="no">
+            No</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox" name="smsConsent" required>
+            I agree to the Privacy Policy and SMS Terms
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox" name="isHuman" required>
+            I am not a robot
+          </label>
+        </div>
+        
+        <button type="submit">Submit Application</button>
+      </form>
+
+      <div id="successMessage" style="display: none; margin-top: 1rem;">
+        <p>✅ Thank you for your application! You should be hearing from us shortly.</p>
+      </div>
+    </aside>
+  </section>
+</main>
+
+
+  <script>
+  window.addEventListener("load", () => {
+    const splash = document.getElementById("splash-screen");
+    splash.classList.add("fade-out");
+
+    // Remove it from the DOM after fade
+    setTimeout(() => {
+      splash.style.display = "none";
+    }, 2000);
+  });
+</script>
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <p>© 2025 Miami Funding Hub. All rights reserved.</p>
+    <p>123 Business St, Miami, FL 33101 | funding@miamifundinghub.com</p>
+    <p>Support Email: <a href="mailto:info@miamifundinghub.com">info@miamifundinghub.com</a></p>
+    <a href="#">SMS Terms & Privacy Policy</a>
+  </div>
+</footer>
+
+<button id="scrollToTop" title="Go to top">↑</button>
+
+
+</body>
+</html>
