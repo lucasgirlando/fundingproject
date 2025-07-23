@@ -77,10 +77,9 @@ document.getElementById("fundingForm").addEventListener("submit", async function
       mode: "no-cors",
       body: JSON.stringify(formData)
     });
+  
+    console.log("✅ Zapier: Webhook sent (no-cors)");
 
-    if (!zapierResponse.ok) {
-      throw new Error(`Zapier returned status ${zapierResponse.status}`);
-    }
 
     console.log("✅ Zapier: Webhook sent");
 
