@@ -44,7 +44,8 @@ document.getElementById("fundingForm").addEventListener("submit", async function
   const lastName = form.elements["lastName"].value;
 
   const formData = {
-    name: `${firstName} ${lastName}`,
+    firstName: firstName,
+    lastName: lastName,
     email: form.elements["email"].value,
     phone: form.elements["phone"].value,
     businessName: form.elements["businessName"].value,
@@ -53,6 +54,8 @@ document.getElementById("fundingForm").addEventListener("submit", async function
     industry: form.elements["industry"].value,
     useOfFunds: form.elements["useOfFunds"].value,
     fundingHistory: form.elements["funding"].value,
+    fundingAmountRequested: form.elements["fundingAmount"].value,
+    referrerCode: form.elements["referrerCode"].value,
   };
 
   console.log("📤 Submitting form data:", formData);
