@@ -424,13 +424,17 @@ form label {
 }
 
 #successMessage {
-  height: 100%;
-  display: none;
-  justify-content: center;
-  align-items: center;
+  background-color: #f0fdf4; /* light green */
+  border: 2px solid #22c55e; /* green border */
+  border-radius: 8px;
+  padding: 1.5rem;
   text-align: center;
-  padding: 2rem;
+  color: #14532d; /* dark green text */
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
 
 .thank-you-text {
   font-size: 1.2rem;
