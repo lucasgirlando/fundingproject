@@ -1,3 +1,7 @@
+window.addEventListener("DOMContentLoaded", () => {
+  emailjs.init("ntpdz1-kojjfmourz");
+});
+
 function scrollToForm() {
   document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
 }
@@ -6,7 +10,6 @@ window.addEventListener("load", () => {
   const splash = document.getElementById("splash-screen");
   splash.classList.add("fade-out");
 
-  // Wait for splash to fully fade before loading particles
   setTimeout(() => {
     tsParticles.load("tsparticles", {
       fullScreen: { enable: false },
@@ -30,36 +33,59 @@ window.addEventListener("load", () => {
         }
       }
     });
-  }, 2000); // Delay for splash fade
+  }, 2000);
 });
 
-
-document.getElementById("fundingForm").addEventListener("submit", function (e) {
+document.getElementById("fundingForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const form = e.target;
+  const firstName = form.elements["firstName"].value;
+  const lastName = form.elements["lastName"].value;
+
   const formData = {
-    name: form.elements["name"].value,
+    name: `${firstName} ${lastName}`,
     email: form.elements["email"].value,
     phone: form.elements["phone"].value,
     businessName: form.elements["businessName"].value,
     monthlyRevenue: form.elements["monthlyRevenue"].value,
-    yearsInBusiness: form.elements["yearsInBusiness"].value,
+    yearsInBusiness: form.elements["years"].value,
     industry: form.elements["industry"].value,
     useOfFunds: form.elements["useOfFunds"].value,
-    fundingHistory: form.elements["fundingHistory"].value,
+    fundingHistory: form.elements["funding"].value,
   };
 
-  emailjs.send("service_95zy8qp", "template_qgwfidj", formData)
-    .then(() => {
-      console.log("✅ Email sent!");
-      document.getElementById("fundingForm").style.display = "none";
-      document.getElementById("thankYou").style.display = "block";
-    }, (err) => {
-      console.error("❌ Email send failed:", err);
-      alert("There was an issue sending your message. Please try again.");
+  console.log("📤 Submitting form data:", formData);
+
+  try {
+    // Send to EmailJS (main notification)
+    await emailjs.send("service_95zy8qp", "template_qgwfidj", formData);
+    console.log("✅ EmailJS: Email sent");
+
+    // Optional: Send internal copy
+    emailjs.send("service_95zy8qp", "internal_template", formData);
+
+    // Send to Zapier Webhook
+    const zapierResponse = await fetch("https://hooks.zapier.com/hooks/catch/23918523/uud7059/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formData)
     });
 
-  // Optional: internal notification
-  emailjs.send("service_95zy8qp", "internal_template", formData);
+    if (!zapierResponse.ok) {
+      throw new Error(`Zapier returned status ${zapierResponse.status}`);
+    }
+
+    console.log("✅ Zapier: Webhook sent");
+
+    // Final UI feedback
+    document.getElementById("fundingForm").style.display = "none";
+    document.getElementById("successMessage").style.display = "block";
+
+  } catch (error) {
+    console.error("❌ Form submission error:", error);
+    alert("Failed to send form: " + (error?.message || "Unknown error"));
+  }
 });
