@@ -56,20 +56,7 @@ const timestamp = new Date().toLocaleString("en-US", {
 document.getElementById("fundingForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
-    const phoneInput = document.getElementById("phone");
-  const phoneError = document.getElementById("phoneError");
-
-  // Strip non-digits from formatted input (like +1 (555) 555-5555 → 15555555555)
-  const rawPhoneDigits = window.phoneInput.getNumber().replace(/\D/g, '');
-
-  if (rawPhoneDigits.length !== 10) {
-    phoneError.style.display = "block";
-    phoneInput.scrollIntoView({ behavior: "smooth", block: "center" });
-    return;
-  } else {
-    phoneError.style.display = "none";
-  }
-
+  
 
   const form = e.target;
   const firstName = form.elements["firstName"].value;
