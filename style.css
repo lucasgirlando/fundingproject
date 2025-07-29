@@ -103,6 +103,7 @@ input:focus, select:focus {
   margin: 0 auto;
 }
 
+
 .top-bar span {
   flex: 1;
   white-space: nowrap;
@@ -330,20 +331,22 @@ input:focus, select:focus {
     display: none;
   }
 
+
+    .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
   .top-bar span {
-    width: 50%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    width: 100%;
+    text-align: left !important;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    margin: 0 !important;
   }
 
-  .top-bar span:first-child {
-    text-align: left;
-  }
-
-  .top-bar span:last-child {
-    text-align: right;
-  }
   .header-logo {
     justify-content: center;
     text-align: center;
@@ -395,7 +398,7 @@ form {
 form .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0px;
+  gap: 2px;
 }
 
 form label {
@@ -421,6 +424,17 @@ form label {
 
 .half-width {
   flex: 1;
+}
+.form-disclaimer {
+  font-size: 0.85rem;
+  color: #cccccc;
+  margin-top: -0.5rem;
+}
+.form-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.25rem;
 }
 
 #successMessage p {
@@ -482,6 +496,10 @@ form button[type="submit"] {
 form button[type="submit"]:hover {
   background-color: #005fa3;
 }
+.form-header {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
 
 
 /* General button styling */
@@ -538,3 +556,55 @@ form .form-group:nth-last-child(2),
 form .form-group:nth-last-child(3) {
   margin-bottom: 0px;
 }
+
+.top-bar span:first-child {
+  text-align: left;
+  margin-left: 31px;     /* move right or left */
+  margin-top: 2px;        /* move up or down */
+}
+
+.top-bar span:last-child {
+  text-align: right;
+  margin-right: 21px;     /* move right or left */
+  margin-top: 2px;        /* move up or down */
+}
+/* Country Code Number CSS */
+/* Main dropdown container */
+.iti__country-list {
+  background-color: #2F3A4A !important; /* dark slate */
+  color: #fff !important;
+  border: 1px solid #334155;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  z-index: 9999 !important;
+}
+
+/* Hover style */
+.iti__country:hover {
+  background-color: #2563eb !important;
+  color: white !important;
+}
+
+/* Highlight selected country */
+.iti__country.iti__highlight {
+  background-color: #3b82f6 !important;
+  color: #fff !important;
+}
+
+/* Dial code and country name */
+.iti__dial-code {
+  color: #cbd5e1 !important;  /* lighter gray-blue */
+}
+
+/* Selected flag box */
+.iti--allow-dropdown input,
+.iti--separate-dial-code .iti__selected-flag {
+  background-color: #2F3A4A !important;
+  color: white !important;
+  border: 1px solid #334155;
+}
+
+/* Dropdown arrow */
+.iti__arrow {
+  border-top-color: white !important;
+}
+

@@ -1,6 +1,16 @@
 window.addEventListener("DOMContentLoaded", () => {
   emailjs.init("ntpdz1-kojjfmourz");
+  
+  const phoneInputField = document.querySelector("#phone");
+  window.phoneInput = window.intlTelInput(phoneInputField, {
+    preferredCountries: ["us", "ve", "mx", "ca"],
+    initialCountry: "us",
+    separateDialCode: true,
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+  });
 });
+
+
 
 function scrollToForm() {
   document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
@@ -36,8 +46,30 @@ window.addEventListener("load", () => {
   }, 2000);
 });
 
+const timestamp = new Date().toLocaleString("en-US", {
+  timeZone: "America/New_York", // or your desired timezone
+  dateStyle: "medium",
+  timeStyle: "short"
+});
+
+
 document.getElementById("fundingForm").addEventListener("submit", async function (e) {
   e.preventDefault();
+
+    const phoneInput = document.getElementById("phone");
+  const phoneError = document.getElementById("phoneError");
+
+  // Strip non-digits from formatted input (like +1 (555) 555-5555 → 15555555555)
+  const rawPhoneDigits = window.phoneInput.getNumber().replace(/\D/g, '');
+
+  if (rawPhoneDigits.length !== 10) {
+    phoneError.style.display = "block";
+    phoneInput.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  } else {
+    phoneError.style.display = "none";
+  }
+
 
   const form = e.target;
   const firstName = form.elements["firstName"].value;
@@ -47,7 +79,7 @@ document.getElementById("fundingForm").addEventListener("submit", async function
     firstName: firstName,
     lastName: lastName,
     email: form.elements["email"].value,
-    phone: form.elements["phone"].value,
+    phone: window.phoneInput.getNumber(),
     businessName: form.elements["businessName"].value,
     monthlyRevenue: form.elements["monthlyRevenue"].value,
     yearsInBusiness: form.elements["years"].value,
@@ -56,6 +88,7 @@ document.getElementById("fundingForm").addEventListener("submit", async function
     fundingHistory: form.elements["funding"].value,
     fundingAmountRequested: form.elements["fundingAmount"].value,
     referrerCode: form.elements["referrerCode"].value,
+    timestamp
   };
 
   console.log("📤 Submitting form data:", formData);
@@ -64,6 +97,12 @@ document.getElementById("fundingForm").addEventListener("submit", async function
     // Send to EmailJS (main notification)
     await emailjs.send("service_95zy8qp", "template_qgwfidj", formData);
     console.log("✅ EmailJS: Email sent");
+
+    await emailjs.send("service_95zy8qp", "internal_notification", {
+       ...formData,
+       to_email: "intake@miamifundinghub.com"
+      });
+
 
     // Optional: Send internal copy
     emailjs.send("service_95zy8qp", "internal_template", formData);
